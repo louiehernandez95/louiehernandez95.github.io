@@ -1,29 +1,106 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Louie Hernandez, Horrible Human</title>
-        <!-- link to main stylesheet -->
-		<link rel="stylesheet" type="text/css" href="/css/main.css">
-	</head>
-	<body>
-		<nav>
-    		<ul>
-        		<li><a href="/">Home</a></li>
-	        	<li><a href="/about">About</a></li>
-        		<li><a href="/cv">CV</a></li>
-    		</ul>
-		</nav>
-		<div class="container">
-    		<div class="blurb">
-        		<h1>Hi there, I'm Louie Hernandez!</h1>
-				<p>I'm best known as an aspiring Software Engineer<em> at Loyola University Chicago</em>. Thank you for visiting my page! <a href="/about">Read more about my life...</a></p>
-    		</div><!-- /.blurb -->
-		</div><!-- /.container -->
-		<footer>
-    		<ul>
-        		<li><a href="mailto:louieghernandez95@gmail.com">email</a></li>
-        		<li><a href="https://github.com/louiehernandez95">github.com/louiehernandez95</a></li>
-			</ul>
-		</footer>
-	</body>
+  <head>
+    <!-- Change the title to whatever you would like to display it as -->
+    <title>Louie Hernandez</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!-- Load scripts here -->
+    <script type="text/javascript" src="libs/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="scripts/main.js"></script>
+    <!-- Load stylesheets, fonts and favicon here -->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="/styles/navbar-fixed-top.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+
+    <div id="content" class="center">
+
+    <div class="header">
+
+      <nav class="navbar nav-bar navbar-default navbar-fixed-top">
+        <div class="container">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">louiehernandez95.github.io</a>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav nav-text">
+              <li><a href="resume_1.pdf">Resume</a></li>
+              <li><a href="https://github.com/louiehernandez95">Github</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="mailto:louieghernandez95z@gmail.com">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+
+    </div>
+
+    <div class="main-content">
+
+      <div id="p" class="text center">
+        <div class="row">
+          <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
+              <div class="mobile-pad"></div>
+              <img class="brush img-responsive" src="img/background.png" />    <!--Mobile-->
+          </div>
+          <div class="hidden-xs col-sm-12 hidden-md hidden-lg">
+              <img class="brush img-responsive" src="img/background.png" />   <!--Tab-->
+              <div class="overlay overlay-m">Louie Hernandez</div>
+          </div>
+          <div class="hidden-xs hidden-sm col-md-12 hidden-lg">
+              <img class="brush img-responsive" src="img/background.png" />   <!--Desktop-->
+              <div class="overlay overlay-l">Louie Hernandez</div>
+          </div>
+          <div class="hidden-xs hidden-sm hidden-md col-lg-12">
+              <img class="brush img-responsive" src="img/background.png" />  <!--Large-->
+              <div class="overlay overlay-xl">Louie Hernandez</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+
+  </body>
 </html>
