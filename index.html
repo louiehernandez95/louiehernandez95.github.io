@@ -1,106 +1,347 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!-- Change the title to whatever you would like to display it as -->
-    <title>Louie Hernandez</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!-- Load scripts here -->
-    <script type="text/javascript" src="libs/bower_components/jquery/dist/jquery.min.js"></script>
-    <script type="text/javascript" src="scripts/main.js"></script>
-    <!-- Load stylesheets, fonts and favicon here -->
+<html lang="en">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<head>
 
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <title>Louie Hernandez | Student, Software Developer</title>
 
-    <!-- Custom styles for this template -->
-    <link href="/styles/navbar-fixed-top.css" rel="stylesheet">
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+    <!-- Custom CSS -->
+    <link href="css/stylish-portfolio.css" rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="stylesheet" type="text/css" href="styles/main.css">
-    <link rel="icon" href="media/favicon.ico" type="image/x-icon">
-  </head>
-  <body>
+</head>
 
-    <div id="content" class="center">
+<body>
 
-    <div class="header">
+    <!-- Navigation -->
+    <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a>
+    <nav id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <a id="menu-close" href="#" class="btn btn-light btn-lg pull-right toggle"><i class="fa fa-times"></i></a>
+            <li class="sidebar-brand">
+                <a href="#top" onclick=$("#menu-close").click();>Carter T. Konz</a>
+            </li>
+            <li>
+                <a href="#top" onclick=$("#menu-close").click();>Home</a>
+            </li>
+            <li>
+                <a href="#about" onclick=$("#menu-close").click();>About</a>
+            </li>
+            <li>
+                <a href="#services" onclick=$("#menu-close").click();>Services</a>
+            </li>
+            <li>
+                <a href="#portfolio" onclick=$("#menu-close").click();>Portfolio</a>
+            </li>
+            <li>
+                <a href="#contact" onclick=$("#menu-close").click();>Contact</a>
+            </li>
+        </ul>
+    </nav>
 
-      <nav class="navbar nav-bar navbar-default navbar-fixed-top">
+    <!-- Header -->
+    <header id="top" class="header">
+        <div class="text-vertical-center">
+            <h1>Louie G. Hernandez</h1>
+            <h3>Student, Software Developer</h3>
+            <br>
+            <a href="mailto:louieghernandez95@gmail.com" class="btn btn-dark btn-lg">Contact</a>
+        </div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="about">
         <div class="container">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">louiehernandez.com</a>
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav nav-text">
-              <li><a href="resume_1.pdf">Resume</a></li>
-              <li><a href="https://github.com/louiehernandez95">Github</a></li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li><a href="mailto:louieghernandez95z@gmail.com">Contact</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>I am a student based in Chicago, IL.</h2>
+                    <p class="lead">I also develop websites and software, you can find some of my projects on <a target="_blank" href="https://github.com/louiehernandez95">GitHub</a>.</p>
+                </div>
+            </div>
+            <!-- /.row -->
         </div>
-      </nav>
+        <!-- /.container -->
+    </section>
 
-    </div>
-
-    <div class="main-content">
-
-      <div id="p" class="text center">
-        <div class="row">
-          <div class="col-xs-12 hidden-sm hidden-md hidden-lg">
-              <div class="mobile-pad"></div>
-              <img class="brush img-responsive" src="img/background.png" />    <!--Mobile-->
-          </div>
-          <div class="hidden-xs col-sm-12 hidden-md hidden-lg">
-              <img class="brush img-responsive" src="img/background.png" />   <!--Tab-->
-              <div class="overlay overlay-m">Louie Hernandez</div>
-          </div>
-          <div class="hidden-xs hidden-sm col-md-12 hidden-lg">
-              <img class="brush img-responsive" src="img/background.png" />   <!--Desktop-->
-              <div class="overlay overlay-l">Louie Hernandez</div>
-          </div>
-          <div class="hidden-xs hidden-sm hidden-md col-lg-12">
-              <img class="brush img-responsive" src="img/background.png" />  <!--Large-->
-              <div class="overlay overlay-xl">Louie Hernandez</div>
-          </div>
+    <!-- Services -->
+    <!-- The circle icons use Font Awesome's stacked icon classes. For more information, visit http://fontawesome.io/examples/ -->
+    <section id="services" class="services bg-primary">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h2>Services</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-sliders fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Audio Engineering</strong>
+                                </h4>
+                                <p>With four years of experience, my engineering work spans a variety of different genres.</p>
+                                <!-- <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-headphones fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Music Production</strong>
+                                </h4>
+                                <p>Available to compose & arrange backing tracks, or for production consultation for your next record.</p>
+                                <!-- <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-flask fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Songwriting</strong>
+                                </h4>
+                                <p>With credits on songs ranging from hip-hop to folk, I'll help craft a hit for you to perform & record.</p>
+                                <!-- <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6">
+                            <div class="service-item">
+                                <span class="fa-stack fa-4x">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-laptop fa-stack-1x text-primary"></i>
+                            </span>
+                                <h4>
+                                    <strong>Web Development</strong>
+                                </h4>
+                                <p>A keen eye for color & design, my expertise will give your internet presence a fresh, professional look.</p>
+                                <!-- <a href="#" class="btn btn-light">Learn More</a> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row (nested) -->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
         </div>
-      </div>
+        <!-- /.container -->
+    </section>
 
-    </div>
+    <!-- Callout
+    <aside class="callout">
+        <div class="text-vertical-center">
+            <h1>Original Music</h1>
+        </div>
+    </aside> -->
 
+    <!-- Portfolio -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h2>Portfolio</h2>
+                    <hr class="small">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="https://soundcloud.com/cartfisk/sets/mixing-portfolio/">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-1.png">
+                                    Audio Portfolio
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="https://soundcloud.com/vlushmusic/">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-2.png">
+                                    Vlush Music
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-3.png">
+                                    Production Credits
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="portfolio-item">
+                                <a href="#">
+                                    <img class="img-portfolio img-responsive" src="img/portfolio-4.png">
+                                    Web Development
+                                </a>
+                            </div>
+                        </div> -->
+                    </div>
+                    <!-- /.row (nested) -->
+                    <!-- <a href="#" class="btn btn-dark">View More Items</a> -->
+                </div>
+                <!-- /.col-lg-10 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </section>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!-- Call to Action -->
+    <aside class="call-to-action bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h3>Get in touch with questions, comments or to book a session!</h3>
+                    <a href="mailto:carter.konz@gmail.com" class="btn btn-lg btn-light">Contact</a>
+                    <a href="https://www.fiverr.com/cartfisk/take-your-song-to-the-next-level" class="btn btn-lg btn-dark">Fiverr</a>
+                    <a href="assets/resume_1.pdf" class="btn btn-lg btn-dark">Resume</a>
+                </div>
+            </div>
+        </div>
+    </aside>
 
-  </body>
+    <!-- Map
+    <section id="contact" class="map">
+        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A&amp;output=embed"></iframe>
+        <br />
+        <small>
+            <a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;aq=0&amp;oq=twitter&amp;sll=28.659344,-81.187888&amp;sspn=0.128789,0.264187&amp;ie=UTF8&amp;hq=Twitter,+Inc.,+Market+Street,+San+Francisco,+CA&amp;t=m&amp;z=15&amp;iwloc=A"></a>
+        </small>
+        </iframe>
+    </section> -->
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1 text-center">
+                    <h4><strong>Louie G. Hernandez</strong>
+                    </h4>
+                    <p>Chicago, IL</p>
+                    <ul class="list-unstyled contact-list">
+                        <li><i class="fa fa-phone fa-fw"></i>(612) 208-9062</li>
+                        <li><i class="fa fa-envelope-o fa-fw"></i> <a href="mailto:name@example.com">louieghernandez95@gmai.com</a>
+                        </li>
+                    </ul>
+                    <br>
+                    <ul class="list-inline fa-list">
+                        <li>
+                            <a href="https://soundcloud.com/cartfisk/"><i class="fa fa-soundcloud fa-fw fa-3x"></i></a>
+                        </li>
+                    </ul>
+                    <hr class="small">
+                    <p class="text-muted">Copyright &copy; louiehernandez.com 2017</p>
+                </div>
+            </div>
+        </div>
+        <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    //#to-top button appears after scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+        if ($(this).scrollTop() > 250) {
+            if (!fixed) {
+                fixed = true;
+                // $('#to-top').css({position:'fixed', display:'block'});
+                $('#to-top').show("slow", function() {
+                    $('#to-top').css({
+                        position: 'fixed',
+                        display: 'block'
+                    });
+                });
+            }
+        } else {
+            if (fixed) {
+                fixed = false;
+                $('#to-top').hide("slow", function() {
+                    $('#to-top').css({
+                        display: 'none'
+                    });
+                });
+            }
+        }
+    });
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+    </script>
+
+</body>
+
 </html>
