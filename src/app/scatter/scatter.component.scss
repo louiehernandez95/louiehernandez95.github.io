@@ -1,0 +1,16 @@
+#container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#legend {
+    height: 400px;
+    width: 450px;
+    position: absolute;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2px;
+}

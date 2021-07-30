@@ -1,28 +1,27 @@
-Personal website based on the Start Bootstrap template found here
+# Portfolio
 
-Start Bootstrap - Stylish Portfolio
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.3.
 
-Stylish Portfolio is a responsive, one page portfolio theme for Bootstrap created by Start Bootstrap. The theme features multiple content sections with an off canvas navigation menu.
+## Development server
 
-Getting Started
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-To begin using this template, choose one of the following options to get started:
+## Code scaffolding
 
-Download the latest release on Start Bootstrap
-Clone the repo: git clone https://github.com/BlackrockDigital/startbootstrap-stylish-portfolio.git
-Fork the repo
-Bugs and Issues
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-Have a bug or an issue with this template? Open a new issue here on GitHub or leave a comment on the template overview page at Start Bootstrap.
+## Build
 
-Creator
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-Start Bootstrap was created by and is maintained by David Miller, Owner of Blackrock Digital.
+## Running unit tests
 
-https://twitter.com/davidmillerskt
-https://github.com/davidtmiller
-Start Bootstrap is based on the Bootstrap framework created by Mark Otto and Jacob Thorton.
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-Copyright and License
+## Running end-to-end tests
 
-Copyright 2013-2016 Blackrock Digital LLC. Code released under the MIT license.
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+## Further help
+
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
