@@ -1,5 +1,32 @@
-<h2>Scatter Plot</h2>
-<div id="container">
-    <svg id="scatter"></svg>
-    <svg id="legend"></svg>
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text">
+                    <p>
+                        <span class="cardSpan">
+                            <span class="icon" id="container">
+                                <svg id="legend"></svg>
+                            </span>
+                        <div>
+                            <button *ngIf="displayButton" class="btn btn-primary" (click)="goToHome()">Back</button>
+                        </div>
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-text">
+                    <i>(Cited From Wikipedia)</i>
+                    <p>
+                        <span class="text-left notepad">{{ noteCardText }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

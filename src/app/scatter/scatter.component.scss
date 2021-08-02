@@ -1,16 +1,14 @@
-#container {
-    display: flex;
-    justify-content: space-between;
-}
-
-#legend {
-    height: 400px;
-    width: 450px;
-    position: absolute;
-}
-
-.line {
-    fill: none;
-    stroke: steelblue;
-    stroke-width: 2px;
+::ng-deep {
+    #legend {
+        height: 400px;
+        width: 450px;
+        position: absolute;
+    }
+    #container {
+        display: flex;
+        justify-content: space-between;
+    }
+    .notepad {
+        white-space: pre-line;
+    }
 }

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~@angular/material/prebuilt-themes/indigo-pink.css';
+@import "~bootstrap/dist/css/bootstrap.css";
 body {
     background: lightsteelblue;
 }
@@ -13,7 +14,7 @@ div.tooltip {
     font-weight: bold !important;
     padding: 2px;
     font: 12px sans-serif;
-    background: white;
+    background: #D3D3D3;
     border: 0px;
     border-radius: 8px;
     pointer-events: none;

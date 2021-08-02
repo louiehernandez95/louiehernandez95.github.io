@@ -2,26 +2,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import * as d3 from 'd3';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { StockColor } from '../models/enums/stock-color.enum';
-import { DataService } from './../services/data.service';
-import { IStock } from './../models/stock.model';
+import { DataService } from '../services/data.service';
+import { IStock } from '../models/stock.model';
 
 @Component({
-  selector: 'app-pie',
-  templateUrl: './pie.component.html',
-  styleUrls: ['./pie.component.scss']
+  selector: 'app-divergent-bar',
+  templateUrl: './divergent-bar.component.html',
+  styleUrls: ['./divergent-bar.component.scss']
 })
-export class PieComponent implements OnInit {
+export class DivergentBarComponent implements OnInit {
   dateKey: string | null = null;
   @Input() notify: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   @Output() notFound: EventEmitter<boolean | null> = new EventEmitter();
   private ticker = 0;
-  // color: any;
-  // pie: any;
-  // svg: any;
-  // g: any;
-  // width: number = 0;
-  // height: number = 0;
-  // radius: number = 0;
   datum: any;
 
   constructor(
@@ -29,12 +22,6 @@ export class PieComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.pie = d3.pie();
-    // this.svg = d3.select("#pie");
-    // this.width = this.svg.attr("width");
-    // this.height = this.svg.attr("height");
-    // this.radius = Math.min(this.width, this.height) / 2;
-    // this.g = this.svg.append("g").attr("transform", "translate(" + this.width / 2 + "," + this.height / 2 + ")");
     this.notify.asObservable().subscribe((res) => {
       if (!res) { return; }
       this.dateKey = res;
@@ -119,10 +106,10 @@ export class PieComponent implements OnInit {
 
     let yG = g.append("g")
       .call(yAxis)
-      .attr("font-size", 16);
+      .attr("font-size", "12px");
 
     yG.append("text")
-      .attr("font-size", 16)
+      .attr("font-size", "12px")
       .attr("fill", "black")
       .text("Day Change (%)")
       .attr("transform", "rotate(-90)")
@@ -132,10 +119,10 @@ export class PieComponent implements OnInit {
     let xG = g.append("g")
       .call(xAxis)
       .attr("transform", `translate(0, ${innerHeight})`)
-      .attr("font-size", 16);
+      .attr("font-size", "12px");
 
     xG.append("text")
-      .attr("font-size", 16)
+      .attr("font-size", "12px")
       .attr("fill", "black")
       .text("Company")
       .attr("y", 50)
@@ -143,9 +130,10 @@ export class PieComponent implements OnInit {
 
     g.append("text")
       .text(`Day Change (%) for: ${this.dateKey}`)
-      .attr("font-size", 26)
+      .style("font-size", "16px")
+      .style("text-decoration", "underline")
       .attr("y", -20)
-      .attr("x", innerWidth / 4);
+      .attr("x", innerWidth / 3);
 
     let rects = g.selectAll("rect").data(data);
     // @ts-ignore

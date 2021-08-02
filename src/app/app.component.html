@@ -1,11 +1,38 @@
-<header>
-    <h1>FAANG- Complete Stock Data</h1>
-</header>
-<mat-form-field appearance="fill">
-    <mat-label>Choose a date</mat-label>
-    <input matInput [matDatepicker]="picker" [formControl]="dateControl">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-</mat-form-field>
-<app-scatter *ngIf="displayScatter"></app-scatter>
-<app-pie *ngIf="!displayScatter" [notify]="notify" (notFound)="onNotFound($event)"></app-pie>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <h1 class="navbar-brand text-light header">FAANG- Complete Stock Data</h1>
+</nav>
+<div class="container-fluid pt-3">
+    <div class="row">
+        <div class="col-lg-12 mb-8">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-text">
+                        <p>
+                            <span class="text-left">There are a few companies that are considered to be revolutionary. These companies also happen to be a dream place to work at for many many people across the world. These companies include - Facebook, Amazon, Apple, Netflix and Google also known as FAANG! These companies make ton of money and they help others too by giving them a chance to invest in the companies via stocks and shares. This data was made targeting these stock prices. <b>(Pro-Tip)</b> If you are looking for a specific date, use the datepicker below. Clear to go back to home.</span>
+                        </p>
+                        <mat-form-field appearance="fill">
+                            <mat-label>Choose a date</mat-label>
+                            <input matInput [matDatepicker]="picker" [formControl]="dateControl">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <p>
+                            <a class="text-left" target="_blank" href="https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data">View Data Here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-3">
+    <app-scatter *ngIf="displayScatter"></app-scatter>
+    <app-divergent-bar *ngIf="!displayScatter" [notify]="notify" (notFound)="onNotFound($event)"></app-divergent-bar>
+</div>
+<footer class="text-center text-lg-start bg-light text-muted">
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2021 Copyright:
+        <a class="text-reset fw-bold" target="_blank" href="https://github.com/louiehernandez95/louiehernandez95.github.io">Link to Repo</a>
+    </div>
+</footer>

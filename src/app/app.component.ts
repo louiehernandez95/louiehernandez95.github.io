@@ -1,8 +1,6 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { Component, OnInit } from '@angular/core';
 import { toDateKey } from './functions/date-key.function';
 import { DataService } from './services/data.service';
-import { PieComponent } from './pie/pie.component';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { FormControl } from '@angular/forms';
 

@@ -7,15 +7,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './services/data.service';
 import { ScatterComponent } from './scatter/scatter.component';
-import { PieComponent } from './pie/pie.component';
+import { DivergentBarComponent } from './divergent-bar/divergent-bar.component';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
+    DivergentBarComponent,
     ScatterComponent,
-    PieComponent
   ],
   imports: [
     BrowserModule,
