@@ -407,7 +407,7 @@ export class ScatterComponent implements AfterViewInit {
     const margin = { top: 20, right: 20, bottom: 50, left: 70 },
       width = 700 - margin.left - margin.right,
       height = 450 - margin.top - margin.bottom;
-    this.noteCardText = `Viewing Company information for ${source.charAt(0).toUpperCase() + source.substring(1)} on year: ${year}\n\nTo Go back to home press the back button below the graph.`
+    this.noteCardText = `Viewing company information for ${source.charAt(0).toUpperCase() + source.substring(1)} on year: ${year}\n\nTo go back to home press the back button below the graph.`
     const parseTime = d3.timeParse("%Y-%m-%d");
 
     const x = d3.scaleTime().range([0, width]);
