@@ -70,7 +70,6 @@ export class DivergentBarComponent implements OnInit {
     let xVal = (d: any) => d?.name;
     let yVal = (d: any) => d?.value;
 
-    //set the margins
     let margin = {
       top: 100,
       right: 100,

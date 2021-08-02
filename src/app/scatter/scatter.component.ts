@@ -14,7 +14,6 @@ import * as d3Annotation from 'd3-svg-annotation';
 })
 export class ScatterComponent implements AfterViewInit {
 
-  // set the dimensions and margins of the graph
   private margin = { top: 20, right: 20, bottom: 50, left: 70 };
   private width = 700 - this.margin.left - this.margin.right;
   private height = 450 - this.margin.top - this.margin.bottom;
@@ -39,7 +38,6 @@ export class ScatterComponent implements AfterViewInit {
   private drawPlot(data: IStock[]): void {
     this.noteCardText = AppConstants.InitNoteCardText;
     const sumstat = d3.group(data, d => d.source);
-    // set the ranges
     const x = d3.scaleTime().range([0, this.width]);
     const y = d3.scaleLinear().range([this.height, 0]);
 
@@ -47,9 +45,6 @@ export class ScatterComponent implements AfterViewInit {
       .attr("class", "tooltip")
       .style("opacity", 0);
 
-    // append the svg obgect to the body of the page
-    // appends a 'group' element to 'svg'
-    // moves the 'group' element to the top left margin
     const svg = d3.select("#container").append("svg")
       .attr("width", this.width + this.margin.left + this.margin.right)
       .attr("height", this.height + this.margin.top + this.margin.bottom)
@@ -57,9 +52,8 @@ export class ScatterComponent implements AfterViewInit {
       .attr("transform",
         "translate(" + this.margin.left + "," + this.margin.top + ")");
 
-    // format the data
     const parseTime = d3.timeParse("%Y-%m-%d");
-    // format the data
+
     data.forEach(function (d) {
       //@ts-ignore
       d.close = +d.close;
@@ -130,12 +124,10 @@ export class ScatterComponent implements AfterViewInit {
         that.drillDown(source, div);
       });
 
-    // Add the X Axis
     svg.append("g")
       .attr("transform", "translate(0," + this.height + ")")
       .call(d3.axisBottom(x));
 
-    // text label for the x axis
     svg.append("text")
       .attr("transform",
         "translate(" + (this.width / 2) + " ," +
@@ -143,11 +135,9 @@ export class ScatterComponent implements AfterViewInit {
       .style("text-anchor", "middle")
       .text("Date");
 
-    // Add the Y Axis
     svg.append("g")
       .call(d3.axisLeft(y));
 
-    // text label for the y axis
     svg.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 0 - this.margin.left)
@@ -257,7 +247,6 @@ export class ScatterComponent implements AfterViewInit {
       .attr("transform",
         "translate(" + margin.left + "," + margin.top + ")");
 
-    // format the data
     data.forEach(function (d) {
       d.close = +d.close;
     });
@@ -277,16 +266,13 @@ export class ScatterComponent implements AfterViewInit {
       // @ts-ignore
       .attr("d", valueline);
 
-    // Add the x Axis
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
 
-    // Add the y Axis
     svg.append("g")
       .call(d3.axisLeft(y));
 
-    // text label for the x axis
     svg.append("text")
       .attr("transform",
         "translate(" + (width / 2) + " ," +
@@ -295,7 +281,6 @@ export class ScatterComponent implements AfterViewInit {
       .attr("x", (height / 15))
       .text("Date");
 
-    // text label for the y axis
     svg.append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 0 - margin.left)
@@ -392,8 +377,6 @@ export class ScatterComponent implements AfterViewInit {
     const makeAnnotations = d3Annotation.annotation()
       .notePadding(15)
       .type(d3Annotation.annotationCalloutCurve)
-      //accessors & accessorsInverse not needed
-      //if using x, y in annotations JSON
       .accessors({
         // @ts-ignore
         x: d => x(parseTime(d.timeStamp)),
