@@ -7,6 +7,7 @@ interface CorrelationInsight {
   value: number;
   strength: string;
   explanation: string;
+  matchScore: number;
 }
 
 interface CompanyStat {
@@ -44,8 +45,8 @@ export class CorrelationLessonComponent implements OnInit {
     this.volumeInsight = this.buildVolumeInsight(rows);
   }
 
-  getCorrelationWidth(value: number): string {
-    return `${Math.max(6, Math.abs(value) * 100)}%`;
+  getMatchWidth(value: number): string {
+    return `${Math.max(8, value)}%`;
   }
 
   formatPercent(value: number): string {
@@ -104,7 +105,8 @@ export class CorrelationLessonComponent implements OnInit {
           label: `${this.toTitle(sources[i])} and ${this.toTitle(sources[j])}`,
           value,
           strength: this.describeCorrelation(value),
-          explanation: `Their daily price changes point in the same direction ${Math.round(Math.abs(value) * 100)} out of 100 steps.`
+          explanation: `Their daily price changes lined up about ${this.toMatchScore(value)} out of 100 steps.`,
+          matchScore: this.toMatchScore(value)
         });
       }
     }
@@ -122,7 +124,8 @@ export class CorrelationLessonComponent implements OnInit {
         label: `${this.toTitle(group.source)} price and trading volume`,
         value,
         strength: this.describeCorrelation(value),
-        explanation: 'This compares the stock price with how many shares were traded that day.'
+        explanation: 'This compares the stock price with how many shares were traded that day.',
+        matchScore: this.toMatchScore(value)
       };
     });
 
@@ -185,6 +188,10 @@ export class CorrelationLessonComponent implements OnInit {
     if (size > 0.4) { return 'medium'; }
     if (size > 0.2) { return 'small'; }
     return 'tiny';
+  }
+
+  private toMatchScore(value: number): number {
+    return Math.round(Math.abs(value) * 100);
   }
 
   private toTitle(value: string): string {

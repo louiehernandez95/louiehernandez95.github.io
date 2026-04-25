@@ -1,10 +1,11 @@
 <section class="lesson-hero">
   <div>
     <p class="eyebrow">Statistics Lesson</p>
-    <h1>Correlation: when two things move together</h1>
+    <h1>Do two things move together?</h1>
     <p>
-      Correlation is a number from -1 to 1. A positive number means two things often move together,
-      a negative number means they often move in opposite directions, and 0 means there is not much pattern.
+      Imagine two classmates jumping rope. Sometimes they jump at the same time. Sometimes one jumps while
+      the other stops. Correlation is just a pattern-spotting tool that asks: "Do these two things usually
+      move together?"
     </p>
   </div>
   <div class="hero-stat">
@@ -16,18 +17,18 @@
 <section class="lesson-grid">
   <article class="lesson-panel">
     <p class="eyebrow">Real Data Insight</p>
-    <h2>These stocks often wiggle together</h2>
+    <h2>Some stocks wiggle in similar ways</h2>
     <ng-container *ngIf="strongestPair">
       <div class="meter-row">
         <span>{{ strongestPair.label }}</span>
-        <strong>{{ strongestPair.value | number:'1.2-2' }}</strong>
+        <strong>{{ strongestPair.matchScore }}/100 match</strong>
       </div>
       <div class="meter">
-        <div [style.width]="getCorrelationWidth(strongestPair.value)"></div>
+        <div [style.width]="getMatchWidth(strongestPair.matchScore)"></div>
       </div>
       <p>
-        This is a {{ strongestPair.strength }} positive relationship in daily percent changes.
-        {{ strongestPair.explanation }}
+        This is the closest pair in this dataset. It does not mean they always move together.
+        It means their ups and downs matched more often than the other pairs we checked.
       </p>
     </ng-container>
   </article>
@@ -36,12 +37,11 @@
     <p class="eyebrow">Try Saying It</p>
     <h2>Correlation does not mean cause</h2>
     <p>
-      If two stocks rise on the same day, it does not prove one stock made the other rise.
+      If two stocks rise on the same day, that does not prove one stock made the other rise.
       They might both be reacting to the same news, the same economy, or the same investor mood.
     </p>
     <p>
-      A good statistician says: "These things are connected in the data. Now we need more evidence
-      before we claim one thing caused the other."
+      A good data detective says: "I found a pattern. Now I need more clues before I say what caused it."
     </p>
   </article>
 </section>
@@ -70,18 +70,18 @@
 <section class="lesson-grid">
   <article class="lesson-panel">
     <p class="eyebrow">Careful Thinking</p>
-    <h2>The weakest pair still teaches us something</h2>
+    <h2>Some patterns are much weaker</h2>
     <ng-container *ngIf="weakestPair">
       <div class="meter-row">
         <span>{{ weakestPair.label }}</span>
-        <strong>{{ weakestPair.value | number:'1.2-2' }}</strong>
+        <strong>{{ weakestPair.matchScore }}/100 match</strong>
       </div>
       <div class="meter muted">
-        <div [style.width]="getCorrelationWidth(weakestPair.value)"></div>
+        <div [style.width]="getMatchWidth(weakestPair.matchScore)"></div>
       </div>
       <p>
-        This pair had the smallest connection among the stock pairs in this dataset. Smaller correlation
-        means the pattern is harder to use for prediction.
+        This pair had the smallest matching pattern among the stock pairs. When the match is small,
+        it is harder to guess what one stock will do by looking at the other.
       </p>
     </ng-container>
   </article>
@@ -92,10 +92,10 @@
     <ng-container *ngIf="volumeInsight">
       <div class="meter-row">
         <span>{{ volumeInsight.label }}</span>
-        <strong>{{ volumeInsight.value | number:'1.2-2' }}</strong>
+        <strong>{{ volumeInsight.matchScore }}/100 match</strong>
       </div>
       <div class="meter warning">
-        <div [style.width]="getCorrelationWidth(volumeInsight.value)"></div>
+        <div [style.width]="getMatchWidth(volumeInsight.matchScore)"></div>
       </div>
       <p>
         Even when a relationship appears, volume alone is not a magic answer. More trading can happen

@@ -14,15 +14,23 @@
 }
 
 #container {
+  align-items: flex-start;
   display: flex;
-  min-height: 520px;
+  min-height: 590px;
   overflow-x: auto;
+  width: 100%;
 }
 
 #legend {
-  height: 400px;
-  min-width: 220px;
-  width: 220px;
+  flex: 0 0 180px;
+  height: 260px;
+  min-width: 180px;
+  width: 180px;
+}
+
+#container > svg:not(#legend) {
+  flex: 0 0 900px;
+  max-width: none;
 }
 
 .back-button {

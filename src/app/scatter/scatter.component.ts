@@ -15,8 +15,8 @@ import * as d3Annotation from 'd3-svg-annotation';
 export class ScatterComponent implements AfterViewInit {
 
   private margin = { top: 20, right: 20, bottom: 50, left: 70 };
-  private width = 700 - this.margin.left - this.margin.right;
-  private height = 450 - this.margin.top - this.margin.bottom;
+  private width = 900 - this.margin.left - this.margin.right;
+  private height = 520 - this.margin.top - this.margin.bottom;
   displayButton = false;
   noteCardText = '';
 
@@ -161,21 +161,20 @@ export class ScatterComponent implements AfterViewInit {
     const keys = Object.keys(StockColor);
 
     const svg = d3.select("#legend")
-      .attr("height", "400px")
-      .attr("width", "450px")
-      .attr("position", "absolute");
+      .attr("height", "260px")
+      .attr("width", "180px");
 
-    svg.append("circle").attr("cx", 100).attr("cy", 80).attr("r", 6).style("fill", StockColor.Amazon)
-    svg.append("circle").attr("cx", 100).attr("cy", 100).attr("r", 6).style("fill", StockColor.Apple)
-    svg.append("circle").attr("cx", 100).attr("cy", 120).attr("r", 6).style("fill", StockColor.Facebook)
-    svg.append("circle").attr("cx", 100).attr("cy", 140).attr("r", 6).style("fill", StockColor.Google)
-    svg.append("circle").attr("cx", 100).attr("cy", 160).attr("r", 6).style("fill", StockColor.Netflix)
+    svg.append("circle").attr("cx", 18).attr("cy", 40).attr("r", 6).style("fill", StockColor.Amazon)
+    svg.append("circle").attr("cx", 18).attr("cy", 68).attr("r", 6).style("fill", StockColor.Apple)
+    svg.append("circle").attr("cx", 18).attr("cy", 96).attr("r", 6).style("fill", StockColor.Facebook)
+    svg.append("circle").attr("cx", 18).attr("cy", 124).attr("r", 6).style("fill", StockColor.Google)
+    svg.append("circle").attr("cx", 18).attr("cy", 152).attr("r", 6).style("fill", StockColor.Netflix)
 
-    svg.append("text").attr("x", 120).attr("y", 80).text(keys[0]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 120).attr("y", 100).text(keys[1]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 120).attr("y", 120).text(keys[2]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 120).attr("y", 140).text(keys[3]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 120).attr("y", 160).text(keys[4]).style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("text").attr("x", 38).attr("y", 40).text(keys[0]).style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("text").attr("x", 38).attr("y", 68).text(keys[1]).style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("text").attr("x", 38).attr("y", 96).text(keys[2]).style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("text").attr("x", 38).attr("y", 124).text(keys[3]).style("font-size", "15px").attr("alignment-baseline", "middle");
+    svg.append("text").attr("x", 38).attr("y", 152).text(keys[4]).style("font-size", "15px").attr("alignment-baseline", "middle");
   }
 
   public goToHome(): void {
@@ -226,8 +225,8 @@ export class ScatterComponent implements AfterViewInit {
     }
 
     const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-      width = 700 - margin.left - margin.right,
-      height = 450 - margin.top - margin.bottom;
+      width = 900 - margin.left - margin.right,
+      height = 520 - margin.top - margin.bottom;
 
     const parseTime = d3.timeParse("%Y-%m-%d");
     const timeFormat = d3.timeFormat("%Y-%m-%d");
@@ -405,8 +404,8 @@ export class ScatterComponent implements AfterViewInit {
       .style("opacity", 0);
 
     const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-      width = 700 - margin.left - margin.right,
-      height = 450 - margin.top - margin.bottom;
+      width = 900 - margin.left - margin.right,
+      height = 520 - margin.top - margin.bottom;
     this.noteCardText = `Viewing company information for ${source.charAt(0).toUpperCase() + source.substring(1)} on year: ${year}\n\nTo go back to home press the back button below the graph.`
     const parseTime = d3.timeParse("%Y-%m-%d");
 
