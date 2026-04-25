@@ -1,106 +1,70 @@
 <section class="lesson-hero">
   <div>
-    <p class="eyebrow">Statistics Lesson</p>
-    <h1>Do two things move together?</h1>
+    <p class="eyebrow">Correlation Lesson</p>
+    <h1>When two Pokémon stats move together</h1>
     <p>
-      Imagine two classmates jumping rope. Sometimes they jump at the same time. Sometimes one jumps while
-      the other stops. Correlation is just a pattern-spotting tool that asks: "Do these two things usually
-      move together?"
+      Correlation means we are looking for a pattern between two numbers. If heavier Pokémon often have
+      higher attack, those two numbers are moving together. It is like noticing that the louder the cafeteria gets,
+      the harder it is to hear your friend explain homework.
     </p>
   </div>
   <div class="hero-stat">
-    <span>{{ totalRows | number }}</span>
-    <p>stock records from <code>stocks.json</code></p>
+    <span>{{ pokemonCount | number }}</span>
+    <p>Pokémon checked for suspicious stat behavior</p>
   </div>
 </section>
 
-<section class="lesson-grid">
-  <article class="lesson-panel">
-    <p class="eyebrow">Real Data Insight</p>
-    <h2>Some stocks wiggle in similar ways</h2>
-    <ng-container *ngIf="strongestPair">
-      <div class="meter-row">
-        <span>{{ strongestPair.label }}</span>
-        <strong>{{ strongestPair.matchScore }}/100 match</strong>
-      </div>
-      <div class="meter">
-        <div [style.width]="getMatchWidth(strongestPair.matchScore)"></div>
-      </div>
-      <p>
-        This is the closest pair in this dataset. It does not mean they always move together.
-        It means their ups and downs matched more often than the other pairs we checked.
-      </p>
-    </ng-container>
+<section class="explain-strip">
+  <article>
+    <strong>Big match score</strong>
+    <span>The two things often move together.</span>
   </article>
+  <article>
+    <strong>Small match score</strong>
+    <span>The pattern is weak, messy, or hiding under a desk.</span>
+  </article>
+  <article>
+    <strong>Important</strong>
+    <span>A pattern is a clue, not proof of cause.</span>
+  </article>
+</section>
 
+<section class="lesson-grid">
+  <article class="lesson-panel" *ngFor="let card of cards">
+    <p class="eyebrow">{{ card.title }}</p>
+    <h2>{{ card.question }}</h2>
+    <div class="meter-row">
+      <span>Pattern match</span>
+      <strong>{{ card.matchScore }}/100</strong>
+    </div>
+    <div class="meter">
+      <div [style.width]="getMatchWidth(card.matchScore)"></div>
+    </div>
+    <p>{{ card.answer }}</p>
+    <p class="joke">{{ card.joke }}</p>
+  </article>
+</section>
+
+<section class="lesson-grid">
   <article class="lesson-panel accent-panel">
-    <p class="eyebrow">Try Saying It</p>
-    <h2>Correlation does not mean cause</h2>
+    <p class="eyebrow">Correlation Is Not Causation</p>
+    <h2>Patterns do not boss the universe around</h2>
     <p>
-      If two stocks rise on the same day, that does not prove one stock made the other rise.
-      They might both be reacting to the same news, the same economy, or the same investor mood.
+      If heavier Pokémon often have more attack, weight did not magically press an "attack goes up" button.
+      Maybe evolution stage, type, game design, or legendary status is part of the story too.
     </p>
     <p>
       A good data detective says: "I found a pattern. Now I need more clues before I say what caused it."
     </p>
   </article>
-</section>
-
-<section class="lesson-panel wide-panel">
-  <p class="eyebrow">From the Dataset</p>
-  <h2>Big data means we can compare lots of examples</h2>
-  <div class="stat-table">
-    <div class="stat-row header-row">
-      <span>Company</span>
-      <span>Trading days</span>
-      <span>First close</span>
-      <span>Latest close</span>
-      <span>Growth</span>
-    </div>
-    <div class="stat-row" *ngFor="let stat of companyStats">
-      <span>{{ stat.name }}</span>
-      <span>{{ stat.days | number }}</span>
-      <span>{{ stat.firstClose | currency }}</span>
-      <span>{{ stat.lastClose | currency }}</span>
-      <span>{{ formatPercent(stat.growth) }}</span>
-    </div>
-  </div>
-</section>
-
-<section class="lesson-grid">
-  <article class="lesson-panel">
-    <p class="eyebrow">Careful Thinking</p>
-    <h2>Some patterns are much weaker</h2>
-    <ng-container *ngIf="weakestPair">
-      <div class="meter-row">
-        <span>{{ weakestPair.label }}</span>
-        <strong>{{ weakestPair.matchScore }}/100 match</strong>
-      </div>
-      <div class="meter muted">
-        <div [style.width]="getMatchWidth(weakestPair.matchScore)"></div>
-      </div>
-      <p>
-        This pair had the smallest matching pattern among the stock pairs. When the match is small,
-        it is harder to guess what one stock will do by looking at the other.
-      </p>
-    </ng-container>
-  </article>
 
   <article class="lesson-panel">
-    <p class="eyebrow">Another Question</p>
-    <h2>Does more trading mean a higher price?</h2>
-    <ng-container *ngIf="volumeInsight">
-      <div class="meter-row">
-        <span>{{ volumeInsight.label }}</span>
-        <strong>{{ volumeInsight.matchScore }}/100 match</strong>
-      </div>
-      <div class="meter warning">
-        <div [style.width]="getMatchWidth(volumeInsight.matchScore)"></div>
-      </div>
-      <p>
-        Even when a relationship appears, volume alone is not a magic answer. More trading can happen
-        when people are excited, worried, or reacting to news.
-      </p>
-    </ng-container>
+    <p class="eyebrow">Rule Breaker</p>
+    <h2>Tiny does not mean harmless</h2>
+    <p>{{ tinyRuleBreaker }}</p>
+    <p>
+      This is why scatter plots matter. Averages tell us the usual story, but individual points can still be
+      delightfully ridiculous.
+    </p>
   </article>
 </section>

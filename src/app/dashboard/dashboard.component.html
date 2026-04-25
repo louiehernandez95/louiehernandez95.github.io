@@ -1,25 +1,29 @@
 <section class="hero-section">
   <div class="hero-copy">
-    <p class="eyebrow">Big Data Lab</p>
-    <h1>Explore real stock data like a statistician.</h1>
+    <p class="eyebrow">Pokémon Data Lab</p>
+    <h1>Can data tell us which Pokémon are secretly built different?</h1>
     <p>
-      This dashboard uses thousands of daily prices from Amazon, Apple, Facebook, Google, and Netflix.
-      Pick a date to compare one trading day, or explore the full time story below.
+      This lab uses a full Pokédex dataset to compare height, weight, type, speed, attack, and defense.
+      The goal is not to pick the best Pokémon. The goal is to learn how patterns can be useful and also
+      very, very sneaky.
     </p>
   </div>
-  <div class="date-panel">
-    <span class="panel-label">Jump to a trading day</span>
-    <mat-form-field appearance="outline">
-      <mat-label>Choose a date</mat-label>
-      <input matInput [matDatepicker]="picker" [formControl]="dateControl">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <a target="_blank" href="https://www.kaggle.com/aayushmishra1512/faang-complete-stock-data">Original dataset</a>
+  <div class="stat-panel">
+    <div>
+      <strong>{{ pokemonCount | number }}</strong>
+      <span>Pokémon</span>
+    </div>
+    <div>
+      <strong>{{ typeCount }}</strong>
+      <span>Types</span>
+    </div>
+    <div>
+      <strong>{{ legendaryCount }}</strong>
+      <span>Legendary or mythical</span>
+    </div>
   </div>
 </section>
 
 <section class="visual-section">
-  <app-scatter *ngIf="displayScatter"></app-scatter>
-  <app-divergent-bar *ngIf="!displayScatter" [notify]="notify" (notFound)="onNotFound()"></app-divergent-bar>
+  <app-scatter></app-scatter>
 </section>

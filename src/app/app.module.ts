@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './services/data.service';
 import { ScatterComponent } from './scatter/scatter.component';
-import { DivergentBarComponent } from './divergent-bar/divergent-bar.component';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,7 +17,6 @@ import { CorrelationLessonComponent } from './correlation-lesson/correlation-les
     AppComponent,
     CorrelationLessonComponent,
     DashboardComponent,
-    DivergentBarComponent,
     ScatterComponent,
   ],
   imports: [

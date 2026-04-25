@@ -1,11 +1,12 @@
 import { AfterViewInit, Component } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { IStock } from '../models/stock.model';
-import { StockColor } from '../models/enums/stock-color.enum';
-import { toDateKey } from '../functions/date-key.function';
-import { AppConstants } from '../constants/app.contants';
 import * as d3 from 'd3';
-import * as d3Annotation from 'd3-svg-annotation';
+import { IPokemon, ITypeSummary } from '../models/pokemon.model';
+import { DataService } from '../services/data.service';
+
+interface Insight {
+  title: string;
+  body: string;
+}
 
 @Component({
   selector: 'app-scatter',
@@ -13,496 +14,221 @@ import * as d3Annotation from 'd3-svg-annotation';
   styleUrls: ['./scatter.component.scss']
 })
 export class ScatterComponent implements AfterViewInit {
+  insights: Insight[] = [];
 
-  private margin = { top: 20, right: 20, bottom: 50, left: 70 };
-  private width = 900 - this.margin.left - this.margin.right;
-  private height = 520 - this.margin.top - this.margin.bottom;
-  displayButton = false;
-  noteCardText = '';
-
-  constructor(
-    private data: DataService,
-  ) { }
+  constructor(private data: DataService) { }
 
   ngAfterViewInit(): void {
-    this.init();
-  }
-
-  private init(): void {
-    this.data.allData$.subscribe((data) => {
-      if (data.length === 0) { return; }
-      this.drawPlot(data);
+    this.data.allData$.subscribe((pokemon) => {
+      if (pokemon.length === 0) { return; }
+      this.insights = this.buildInsights(pokemon);
+      this.drawScatter(pokemon);
+      this.drawTypeCountBars(this.data.getTypeSummaries());
+      this.drawSpeedBars(this.data.getTypeSummaries());
     });
   }
 
-  private drawPlot(data: IStock[]): void {
-    this.noteCardText = AppConstants.InitNoteCardText;
-    const sumstat = d3.group(data, d => d.source);
-    const x = d3.scaleTime().range([0, this.width]);
-    const y = d3.scaleLinear().range([this.height, 0]);
+  private drawScatter(pokemon: IPokemon[]): void {
+    d3.select('#pokemon-scatter').selectAll('*').remove();
 
-    const div = d3.select("body").append("div")
-      .attr("class", "tooltip")
-      .style("opacity", 0);
+    const width = 1050;
+    const height = 520;
+    const margin = { top: 20, right: 30, bottom: 70, left: 80 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const topPokemon = pokemon.filter((p) => p.weight > 0 && p.stats.attack > 0);
 
-    const svg = d3.select("#container").append("svg")
-      .attr("width", this.width + this.margin.left + this.margin.right)
-      .attr("height", this.height + this.margin.top + this.margin.bottom)
-      .append("g")
-      .attr("transform",
-        "translate(" + this.margin.left + "," + this.margin.top + ")");
+    const x = d3.scaleLinear()
+      .domain([0, d3.max(topPokemon, (p) => p.weight) || 1])
+      .nice()
+      .range([0, innerWidth]);
 
-    const parseTime = d3.timeParse("%Y-%m-%d");
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(topPokemon, (p) => p.stats.attack) || 1])
+      .nice()
+      .range([innerHeight, 0]);
 
-    data.forEach(function (d) {
-      //@ts-ignore
-      d.close = +d.close;
-    });
+    const radius = d3.scaleSqrt()
+      .domain([0, d3.max(topPokemon, (p) => p.stats.hp) || 1])
+      .range([3, 18]);
 
-    // @ts-ignore
-    x.domain(d3.extent(data, function (d: any) { return parseTime(d.timeStamp); }));
-    // @ts-ignoret
-    y.domain([0, d3.max(data, function (d) { return +d.close; })]);
+    const color = d3.scaleOrdinal<string>()
+      .domain(['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'steel', 'dark', 'fairy'])
+      .range(['#94a3b8', '#ef4444', '#3b82f6', '#f59e0b', '#22c55e', '#67e8f9', '#b45309', '#a855f7', '#ca8a04', '#38bdf8', '#ec4899', '#84cc16', '#78716c', '#6366f1', '#7c3aed', '#64748b', '#111827', '#f472b6']);
 
-    const res = Array.from(sumstat.keys()).sort();
+    const svg = d3.select('#pokemon-scatter')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
 
-    const color = d3.scaleOrdinal()
-      .domain(res)
-      .range([StockColor.Amazon, StockColor.Apple, StockColor.Facebook, StockColor.Google, StockColor.Netflix])
-    const that = this;
-    // @ts-ignore
-    svg.selectAll("path")
-      .data(sumstat)
-      .join("path")
-      .attr('fill', 'none')
-      .attr('stroke-width', 2)
-      .attr('stroke', d => color(d[0]))
-      .attr("d", (d: any) => {
-        return d3.line()
-          // @ts-ignore
-          .x(d => x(parseTime(d.timeStamp)))
-          // @ts-ignore
-          .y(d => y(+d.close))
-          (d[1])
-      })
-      .on("mouseover", function (event, d) {
-        const date = x.invert(d3.pointer(event, svg.node())[0]);
-        const dateKey = toDateKey(date);
+    const plot = svg.append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
-        const toolTipObject = d[1].find((d) => d.timeStamp === dateKey);
-        if (toolTipObject === undefined) { return; }
-
-        div.transition()
-          .duration(200)
-          .style("opacity", .9);
-        // @ts-ignore
-        const formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        });
-
-        const companyName = d[0].charAt(0).toUpperCase() + d[0].substring(1);
-        div.html(`Company: ${companyName}<br/><br/>
-              Date: ${dateKey}<br/><br/>
-              Open: ${formatter.format(toolTipObject?.open)}<br/><br/>
-              Close: ${formatter.format(toolTipObject?.close)}<br/><br/>
-              High: ${formatter.format(toolTipObject?.high)}<br/><br/>
-              Volume: ${Number(toolTipObject?.volume).toLocaleString()}
-          `)
-          .style("left", (event.pageX) + "px")
-          .style("top", (event.pageY - 28) + "px");
-      })
-      .on("mouseout", function (d) {
-        div.transition()
-          .duration(500)
-          .style("opacity", 0);
-      })
-      .on('click', function (event, d) {
-        const date = x.invert(d3.pointer(event, svg.node())[0]);
-        const dateKey = toDateKey(date);
-        const source = d[1].find((d) => d.timeStamp === dateKey)?.source as string;
-        that.drillDown(source, div);
-      });
-
-    svg.append("g")
-      .attr("transform", "translate(0," + this.height + ")")
+    plot.append('g')
+      .attr('transform', `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x));
 
-    svg.append("text")
-      .attr("transform",
-        "translate(" + (this.width / 2) + " ," +
-        (this.height + this.margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .text("Date");
-
-    svg.append("g")
+    plot.append('g')
       .call(d3.axisLeft(y));
 
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - this.margin.left)
-      .attr("x", 0 - (this.height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Price ($)");
+    plot.append('text')
+      .attr('x', innerWidth / 2)
+      .attr('y', innerHeight + 50)
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 800)
+      .text('Weight');
 
-    svg.append("text")
-      .attr("x", (this.width / 2))
-      .attr("y", 0 - (this.margin.top / 2.5))
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("text-decoration", "underline")
-      .text(`FAANG Stock Data from IPO to Today`);
+    plot.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -innerHeight / 2)
+      .attr('y', -55)
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 800)
+      .text('Attack');
 
-    this.buildLegend();
-  }
+    const tooltip = d3.select('body').append('div')
+      .attr('class', 'tooltip')
+      .style('opacity', 0);
 
-  private buildLegend(): void {
-    const keys = Object.keys(StockColor);
-
-    const svg = d3.select("#legend")
-      .attr("height", "260px")
-      .attr("width", "180px");
-
-    svg.append("circle").attr("cx", 18).attr("cy", 40).attr("r", 6).style("fill", StockColor.Amazon)
-    svg.append("circle").attr("cx", 18).attr("cy", 68).attr("r", 6).style("fill", StockColor.Apple)
-    svg.append("circle").attr("cx", 18).attr("cy", 96).attr("r", 6).style("fill", StockColor.Facebook)
-    svg.append("circle").attr("cx", 18).attr("cy", 124).attr("r", 6).style("fill", StockColor.Google)
-    svg.append("circle").attr("cx", 18).attr("cy", 152).attr("r", 6).style("fill", StockColor.Netflix)
-
-    svg.append("text").attr("x", 38).attr("y", 40).text(keys[0]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 38).attr("y", 68).text(keys[1]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 38).attr("y", 96).text(keys[2]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 38).attr("y", 124).text(keys[3]).style("font-size", "15px").attr("alignment-baseline", "middle");
-    svg.append("text").attr("x", 38).attr("y", 152).text(keys[4]).style("font-size", "15px").attr("alignment-baseline", "middle");
-  }
-
-  public goToHome(): void {
-    d3.select("#container").selectAll("svg").remove();
-    this.displayButton = false;
-    this.drawPlot(this.data.allData);
-  }
-
-  private drillDown(source: string, div: any) {
-    if (source === null || source === undefined) { return; }
-    d3.select("#container").selectAll("svg").remove();
-    this.displayButton = true;
-
-    div.transition()
-      .duration(500)
-      .style("opacity", 0);
-
-    let data: IStock[] = [];
-    switch (source) {
-      case 'amazon': {
-        data = this.data.amazonData;
-        this.noteCardText = AppConstants.AmazonDetailCardText;
-        break;
-      }
-      case 'apple': {
-        data = this.data.appleData;
-        this.noteCardText = AppConstants.AppleDetailNoteCardText;
-        break;
-      }
-      case 'facebook': {
-        data = this.data.facebookData;
-        this.noteCardText = AppConstants.FacebookDetailNoteCardText;
-        break;
-      }
-      case 'google': {
-        data = this.data.googleData;
-        this.noteCardText = AppConstants.GoogleDetailNoteCardText;
-        break;
-      }
-      case 'netflix': {
-        data = this.data.netflixData;
-        this.noteCardText = AppConstants.NetflixDetailNoteCardText;
-        break;
-      }
-      default: {
-        break;
-      }
-    }
-
-    const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-      width = 900 - margin.left - margin.right,
-      height = 520 - margin.top - margin.bottom;
-
-    const parseTime = d3.timeParse("%Y-%m-%d");
-    const timeFormat = d3.timeFormat("%Y-%m-%d");
-
-    const x = d3.scaleTime().range([0, width]);
-    const y = d3.scaleLinear().range([height, 0]);
-
-    const valueline = d3.line()
-      // @ts-ignore
-      .x(function (d: any) { return x(parseTime(d.timeStamp)); })
-      .y(function (d: any) { return y(d.close); });
-
-    const svg = d3.select("#container").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
-
-    data.forEach(function (d) {
-      d.close = +d.close;
-    });
-
-    // @ts-ignore
-    x.domain(d3.extent(data, function (d) { return parseTime(d.timeStamp); }));
-    // @ts-ignore
-    y.domain([0, d3.max(data, function (d) { return d.close; })]);
-    // @ts-ignore
-    const color = StockColor[(data[0].source as string).charAt(0).toUpperCase() + (data[0].source as string).substring(1)];
-
-    svg.append("path")
-      .data([data])
-      .attr('fill', 'none')
-      .attr('stroke-width', 2)
-      .attr('stroke', color)
-      // @ts-ignore
-      .attr("d", valueline);
-
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
-
-    svg.append("g")
-      .call(d3.axisLeft(y));
-
-    svg.append("text")
-      .attr("transform",
-        "translate(" + (width / 2) + " ," +
-        (height + margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .attr("x", (height / 15))
-      .text("Date");
-
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - margin.left)
-      .attr("x", 0 - (height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Price ($)");
-
-    const list: string[] = [];
-    const filteredPrices: IStock[] = [];
-    for (const price of data) {
-      if (list.includes(price.timeStamp.slice(0, 4))) { continue; }
-      list.push(price.timeStamp.slice(0, 4));
-      filteredPrices.push(price);
-    }
-    const that = this;
-    svg.append("g")
-      .selectAll("dot")
-      .data(filteredPrices)
-      .enter()
-      .append("circle")
-      // @ts-ignore
-      .attr("cx", (d: any) => { return x(parseTime(d.timeStamp)); })
-      .attr("cy", (d: any) => { return y(d.close) })
-      .attr("r", 4)
-      .attr("stroke", "#000000")
-      .attr("stroke-width", 2)
-      .attr("fill", "white")
-      .on("mouseover", function (event, d: any) {
-        div.transition()
-          .duration(200)
-          .style("opacity", .9);
-        // @ts-ignore
-        const formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        });
-
-        div.html(`Year: ${d.timeStamp.slice(0, 4)}<br/><br/>
-              Open: ${formatter.format(d?.open)}<br/><br/>
-              Close: ${formatter.format(d?.close)}<br/><br/>
-              High: ${formatter.format(d?.high)}<br/><br/>
-              Volume: ${Number(d?.volume).toLocaleString()}
-          `)
-          .style("left", (event.pageX) + "px")
-          .style("top", (event.pageY - 28) + "px");
+    plot.selectAll('circle')
+      .data(topPokemon)
+      .join('circle')
+      .attr('cx', (p) => x(p.weight))
+      .attr('cy', (p) => y(p.stats.attack))
+      .attr('r', (p) => radius(p.stats.hp))
+      .attr('fill', (p) => color(p.types[0]))
+      .attr('fill-opacity', 0.72)
+      .attr('stroke', '#ffffff')
+      .attr('stroke-width', 1.5)
+      .on('mouseover', (event, p) => {
+        tooltip.transition().duration(120).style('opacity', 0.95);
+        tooltip.html(`
+          <strong>${this.titleCase(p.name)}</strong><br/>
+          Type: ${p.types.join(', ')}<br/>
+          Weight: ${p.weight}<br/>
+          Attack: ${p.stats.attack}<br/>
+          Speed: ${p.stats.speed}
+        `)
+          .style('left', `${event.pageX + 12}px`)
+          .style('top', `${event.pageY - 28}px`);
       })
-      .on("mouseout", function (d) {
-        div.transition()
-          .duration(500)
-          .style("opacity", 0);
-      })
-      .on('click', function (event, d) {
-        that.drillDownRockBottom(d.timeStamp.slice(0, 4), data, div);
+      .on('mouseout', () => {
+        tooltip.transition().duration(200).style('opacity', 0);
       });
-
-    svg.append("text")
-      .attr("x", (width / 2))
-      .attr("y", 0 - (margin.top / 2.5))
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("text-decoration", "underline")
-      .text(`Historical Stock Price Data for: ${source.charAt(0).toUpperCase() + source.substring(1)}`);
-
-
-    let annotations: any = [];
-    switch (source) {
-      case 'amazon': {
-        annotations = AppConstants.AmazonAnnotations;
-        break;
-      }
-
-      case 'apple': {
-        annotations = AppConstants.AppleAnnotations;
-        break;
-      }
-
-      case 'google': {
-        annotations = AppConstants.GoogleAnnotations;
-        break;
-      }
-
-      case 'netflix': {
-        annotations = AppConstants.NetflixAnnotations;
-        break;
-      }
-
-      case 'facebook': {
-        annotations = AppConstants.FacebookAnnotations;
-        break;
-      }
-    }
-
-    const makeAnnotations = d3Annotation.annotation()
-      .notePadding(15)
-      .type(d3Annotation.annotationCalloutCurve)
-      .accessors({
-        // @ts-ignore
-        x: d => x(parseTime(d.timeStamp)),
-        y: (d: any) => y(d.close)
-      })
-      .accessorsInverse({
-        timeStamp: (d: any) => timeFormat(x.invert(d.x)),
-        // @ts-ignore
-        close: d => y.invert(d.y)
-      })
-      .annotations(annotations)
-
-    svg.append("g")
-      .attr("class", "annotation-group")
-      // @ts-ignore
-      .call(makeAnnotations);
   }
 
-  private drillDownRockBottom(year: string, data: IStock[], div: any): void {
-    const source = data[0].source;
-    const dataForYear = data.filter((d) => year === d.timeStamp.slice(0, 4));
-    d3.select("#container").selectAll("svg").remove();
+  private drawTypeCountBars(summaries: ITypeSummary[]): void {
+    this.drawBars('#type-bars', summaries.slice(0, 10), 'count', '#14b8a6', 'Number of Pokémon');
+  }
 
-    div.transition()
-      .duration(500)
-      .style("opacity", 0);
+  private drawSpeedBars(summaries: ITypeSummary[]): void {
+    const fastest = [...summaries].sort((a, b) => b.averageSpeed - a.averageSpeed).slice(0, 10);
+    this.drawBars('#speed-bars', fastest, 'averageSpeed', '#f59e0b', 'Average speed');
+  }
 
-    const margin = { top: 20, right: 20, bottom: 50, left: 70 },
-      width = 900 - margin.left - margin.right,
-      height = 520 - margin.top - margin.bottom;
-    this.noteCardText = `Viewing company information for ${source.charAt(0).toUpperCase() + source.substring(1)} on year: ${year}\n\nTo go back to home press the back button below the graph.`
-    const parseTime = d3.timeParse("%Y-%m-%d");
+  private drawBars(selector: string, data: ITypeSummary[], key: 'count' | 'averageSpeed', fill: string, axisLabel: string): void {
+    d3.select(selector).selectAll('*').remove();
 
-    const x = d3.scaleTime().range([0, width]);
-    const y = d3.scaleLinear().range([height, 0]);
+    const width = 720;
+    const height = 390;
+    const margin = { top: 10, right: 20, bottom: 70, left: 70 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
 
-    const valueline = d3.line()
-      // @ts-ignore
-      .x(function (d: any) { return x(parseTime(d.timeStamp)); })
-      .y(function (d: any) { return y(d.close); });
+    const x = d3.scaleBand()
+      .domain(data.map((d) => this.titleCase(d.type)))
+      .range([0, innerWidth])
+      .padding(0.22);
 
-    const svg = d3.select("#container").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-      .attr("transform",
-        "translate(" + margin.left + "," + margin.top + ")");
+    const y = d3.scaleLinear()
+      .domain([0, d3.max(data, (d) => d[key]) || 1])
+      .nice()
+      .range([innerHeight, 0]);
 
-    dataForYear.forEach(function (d) {
-      d.close = +d.close;
-    });
+    const svg = d3.select(selector)
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
 
-    // @ts-ignore
-    x.domain(d3.extent(dataForYear, function (d) { return parseTime(d.timeStamp); }));
-    // @ts-ignore
-    y.domain([0, d3.max(dataForYear, function (d) { return d.close; })]);
-    // @ts-ignore
-    const color = StockColor[(source as string).charAt(0).toUpperCase() + (source as string).substring(1)];
+    const plot = svg.append('g')
+      .attr('transform', `translate(${margin.left},${margin.top})`);
 
-    svg.append("path")
-      .data([dataForYear])
-      .attr('fill', 'none')
-      .attr('stroke-width', 4)
-      .attr('stroke', color)
-      // @ts-ignore
-      .attr("d", valueline)
-      .on("mouseover", function (event, d: any) {
-        const date = x.invert(d3.pointer(event, svg.node())[0]);
-        const dateKey = toDateKey(date);
+    plot.selectAll('rect')
+      .data(data)
+      .join('rect')
+      .attr('x', (d) => x(this.titleCase(d.type)) || 0)
+      .attr('y', (d) => y(d[key]))
+      .attr('width', x.bandwidth())
+      .attr('height', (d) => innerHeight - y(d[key]))
+      .attr('rx', 6)
+      .attr('fill', fill);
 
-        const toolTipObject = d.find((d: any) => d.timeStamp === dateKey);
-        if (toolTipObject === undefined) { return; }
+    plot.append('g')
+      .attr('transform', `translate(0,${innerHeight})`)
+      .call(d3.axisBottom(x))
+      .selectAll('text')
+      .attr('transform', 'rotate(-35)')
+      .style('text-anchor', 'end');
 
-        div.transition()
-          .duration(200)
-          .style("opacity", .9);
-        // @ts-ignore
-        const formatter = new Intl.NumberFormat('en-US', {
-          style: 'currency',
-          currency: 'USD'
-        });
+    plot.append('g').call(d3.axisLeft(y));
 
-        div.html(`Date: ${dateKey}<br/><br/>
-              Open: ${formatter.format(toolTipObject?.open)}<br/><br/>
-              Close: ${formatter.format(toolTipObject?.close)}<br/><br/>
-              High: ${formatter.format(toolTipObject?.high)}<br/><br/>
-              Volume: ${Number(toolTipObject?.volume).toLocaleString()}
-          `)
-          .style("left", (event.pageX) + "px")
-          .style("top", (event.pageY - 28) + "px");
-      })
-      .on("mouseout", function (d) {
-        div.transition()
-          .duration(500)
-          .style("opacity", 0);
-      });
+    plot.append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('x', -innerHeight / 2)
+      .attr('y', -50)
+      .attr('text-anchor', 'middle')
+      .attr('font-weight', 800)
+      .text(axisLabel);
+  }
 
-    svg.append("g")
-      .attr("transform", "translate(0," + height + ")")
-      .call(d3.axisBottom(x));
+  private buildInsights(pokemon: IPokemon[]): Insight[] {
+    const heaviest = [...pokemon].sort((a, b) => b.weight - a.weight)[0];
+    const fastest = [...pokemon].sort((a, b) => b.stats.speed - a.stats.speed)[0];
+    const attackCorrelation = this.correlation(
+      pokemon.map((p) => p.weight),
+      pokemon.map((p) => p.stats.attack)
+    );
 
-    svg.append("g")
-      .call(d3.axisLeft(y));
+    return [
+      {
+        title: `${this.titleCase(heaviest.name)} is the backpack destroyer`,
+        body: `At ${heaviest.weight} weight units, this Pokémon is extremely heavy. But heavy does not automatically mean strongest.`
+      },
+      {
+        title: `${this.titleCase(fastest.name)} did not wait for attendance`,
+        body: `Its speed stat is ${fastest.stats.speed}. Fast Pokémon are not always huge, which is exactly why scatter plots are useful.`
+      },
+      {
+        title: 'Weight and attack have a pattern, but not a promise',
+        body: `Their match score is about ${Math.round(Math.abs(attackCorrelation) * 100)}/100. That means bigger Pokémon often hit harder, but plenty of tiny troublemakers break the rule.`
+      }
+    ];
+  }
 
-    svg.append("text")
-      .attr("transform",
-        "translate(" + (this.width / 2) + " ," +
-        (this.height + this.margin.top + 20) + ")")
-      .style("text-anchor", "middle")
-      .attr("x", (this.height / 15))
-      .text("Date");
+  private correlation(left: number[], right: number[]): number {
+    const leftAverage = this.average(left);
+    const rightAverage = this.average(right);
+    let top = 0;
+    let leftBottom = 0;
+    let rightBottom = 0;
 
-    svg.append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 0 - this.margin.left)
-      .attr("x", 0 - (this.height / 2))
-      .attr("dy", "1em")
-      .style("text-anchor", "middle")
-      .text("Price ($)");
+    for (let i = 0; i < left.length; i++) {
+      const leftDistance = left[i] - leftAverage;
+      const rightDistance = right[i] - rightAverage;
+      top += leftDistance * rightDistance;
+      leftBottom += leftDistance * leftDistance;
+      rightBottom += rightDistance * rightDistance;
+    }
 
-    svg.append("text")
-      .attr("x", (width / 2))
-      .attr("y", 0 - (margin.top / 2.5))
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("text-decoration", "underline")
-      .text(`${source.charAt(0).toUpperCase() + source.substring(1)}'s Trading History for Year: ${year}`);
+    const bottom = Math.sqrt(leftBottom * rightBottom);
+    return bottom === 0 ? 0 : top / bottom;
+  }
 
+  private average(values: number[]): number {
+    return values.reduce((sum, value) => sum + value, 0) / values.length;
+  }
+
+  private titleCase(value: string): string {
+    return value.charAt(0).toUpperCase() + value.substring(1).replace('-', ' ');
   }
 }
