@@ -1,7 +1,7 @@
 .chart-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .chart-panel,
@@ -57,10 +57,4 @@
   line-height: 1.7;
   margin: 0;
   white-space: pre-line;
-}
-
-@media (max-width: 900px) {
-  .chart-grid {
-    grid-template-columns: 1fr;
-  }
 }
