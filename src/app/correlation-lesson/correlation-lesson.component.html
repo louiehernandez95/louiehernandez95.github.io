@@ -1,0 +1,106 @@
+<section class="lesson-hero">
+  <div>
+    <p class="eyebrow">Statistics Lesson</p>
+    <h1>Correlation: when two things move together</h1>
+    <p>
+      Correlation is a number from -1 to 1. A positive number means two things often move together,
+      a negative number means they often move in opposite directions, and 0 means there is not much pattern.
+    </p>
+  </div>
+  <div class="hero-stat">
+    <span>{{ totalRows | number }}</span>
+    <p>stock records from <code>stocks.json</code></p>
+  </div>
+</section>
+
+<section class="lesson-grid">
+  <article class="lesson-panel">
+    <p class="eyebrow">Real Data Insight</p>
+    <h2>These stocks often wiggle together</h2>
+    <ng-container *ngIf="strongestPair">
+      <div class="meter-row">
+        <span>{{ strongestPair.label }}</span>
+        <strong>{{ strongestPair.value | number:'1.2-2' }}</strong>
+      </div>
+      <div class="meter">
+        <div [style.width]="getCorrelationWidth(strongestPair.value)"></div>
+      </div>
+      <p>
+        This is a {{ strongestPair.strength }} positive relationship in daily percent changes.
+        {{ strongestPair.explanation }}
+      </p>
+    </ng-container>
+  </article>
+
+  <article class="lesson-panel accent-panel">
+    <p class="eyebrow">Try Saying It</p>
+    <h2>Correlation does not mean cause</h2>
+    <p>
+      If two stocks rise on the same day, it does not prove one stock made the other rise.
+      They might both be reacting to the same news, the same economy, or the same investor mood.
+    </p>
+    <p>
+      A good statistician says: "These things are connected in the data. Now we need more evidence
+      before we claim one thing caused the other."
+    </p>
+  </article>
+</section>
+
+<section class="lesson-panel wide-panel">
+  <p class="eyebrow">From the Dataset</p>
+  <h2>Big data means we can compare lots of examples</h2>
+  <div class="stat-table">
+    <div class="stat-row header-row">
+      <span>Company</span>
+      <span>Trading days</span>
+      <span>First close</span>
+      <span>Latest close</span>
+      <span>Growth</span>
+    </div>
+    <div class="stat-row" *ngFor="let stat of companyStats">
+      <span>{{ stat.name }}</span>
+      <span>{{ stat.days | number }}</span>
+      <span>{{ stat.firstClose | currency }}</span>
+      <span>{{ stat.lastClose | currency }}</span>
+      <span>{{ formatPercent(stat.growth) }}</span>
+    </div>
+  </div>
+</section>
+
+<section class="lesson-grid">
+  <article class="lesson-panel">
+    <p class="eyebrow">Careful Thinking</p>
+    <h2>The weakest pair still teaches us something</h2>
+    <ng-container *ngIf="weakestPair">
+      <div class="meter-row">
+        <span>{{ weakestPair.label }}</span>
+        <strong>{{ weakestPair.value | number:'1.2-2' }}</strong>
+      </div>
+      <div class="meter muted">
+        <div [style.width]="getCorrelationWidth(weakestPair.value)"></div>
+      </div>
+      <p>
+        This pair had the smallest connection among the stock pairs in this dataset. Smaller correlation
+        means the pattern is harder to use for prediction.
+      </p>
+    </ng-container>
+  </article>
+
+  <article class="lesson-panel">
+    <p class="eyebrow">Another Question</p>
+    <h2>Does more trading mean a higher price?</h2>
+    <ng-container *ngIf="volumeInsight">
+      <div class="meter-row">
+        <span>{{ volumeInsight.label }}</span>
+        <strong>{{ volumeInsight.value | number:'1.2-2' }}</strong>
+      </div>
+      <div class="meter warning">
+        <div [style.width]="getCorrelationWidth(volumeInsight.value)"></div>
+      </div>
+      <p>
+        Even when a relationship appears, volume alone is not a magic answer. More trading can happen
+        when people are excited, worried, or reacting to news.
+      </p>
+    </ng-container>
+  </article>
+</section>

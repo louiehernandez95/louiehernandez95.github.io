@@ -1,17 +1,101 @@
-div.tooltip {
-    position: absolute;
-    text-align: middle !important;
-    width: 150px;
-    height: 150px;
-    font-weight: bold !important;
-    padding: 2px;
-    font: 12px sans-serif;
-    background: #D3D3D3;
-    border: 0px;
-    border-radius: 8px;
-    pointer-events: none;
+.top-bar {
+  align-items: center;
+  backdrop-filter: blur(18px);
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  display: flex;
+  justify-content: space-between;
+  min-height: 72px;
+  padding: 0 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.header {
-    margin-left: 25px;
+.brand,
+.tabs {
+  align-items: center;
+  display: flex;
+}
+
+.brand {
+  color: #111827;
+  font-size: 1rem;
+  font-weight: 900;
+  gap: 0.65rem;
+  text-decoration: none;
+}
+
+.brand-mark {
+  align-items: center;
+  background: #111827;
+  border-radius: 8px;
+  color: #ffffff;
+  display: inline-flex;
+  height: 38px;
+  justify-content: center;
+  width: 38px;
+}
+
+.tabs {
+  background: #eef2f7;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  gap: 0.25rem;
+  padding: 0.25rem;
+}
+
+.tabs a {
+  border-radius: 999px;
+  color: #475569;
+  font-size: 0.92rem;
+  font-weight: 800;
+  padding: 0.65rem 1rem;
+  text-decoration: none;
+}
+
+.tabs a.active {
+  background: #ffffff;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  color: #0f766e;
+}
+
+main {
+  min-height: calc(100vh - 132px);
+}
+
+footer {
+  align-items: center;
+  color: #64748b;
+  display: flex;
+  font-weight: 700;
+  gap: 1rem;
+  justify-content: center;
+  padding: 1.5rem 1rem 2rem;
+}
+
+footer a {
+  color: #2563eb;
+}
+
+@media (max-width: 640px) {
+  .top-bar,
+  footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .top-bar {
+    gap: 0.75rem;
+    padding: 0.85rem;
+  }
+
+  .tabs {
+    justify-content: stretch;
+  }
+
+  .tabs a {
+    flex: 1;
+    text-align: center;
+  }
 }

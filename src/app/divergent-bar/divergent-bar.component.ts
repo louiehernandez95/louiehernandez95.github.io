@@ -153,7 +153,7 @@ export class DivergentBarComponent implements OnInit {
           return (innerHeight / 2) - scaleY(yVal(d))
         }
       })
-      .attr("fill", d => colorScale(yVal(d)))
+      .attr("fill", d => colorScale(xVal(d)))
       .append("title")
       // @ts-ignore
       .text(d => `Day Change: ${d?.value?.toFixed(4)}%\nClose: $${d?.close?.toFixed(3)}\nVolume: ${Number(d?.volume)?.toLocaleString()}`);

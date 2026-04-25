@@ -10,10 +10,14 @@ import { ScatterComponent } from './scatter/scatter.component';
 import { DivergentBarComponent } from './divergent-bar/divergent-bar.component';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { CorrelationLessonComponent } from './correlation-lesson/correlation-lesson.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    CorrelationLessonComponent,
+    DashboardComponent,
     DivergentBarComponent,
     ScatterComponent,
   ],

@@ -1,14 +1,58 @@
-::ng-deep {
-    #legend {
-        height: 400px;
-        width: 450px;
-        position: absolute;
-    }
-    #container {
-        display: flex;
-        justify-content: space-between;
-    }
-    .notepad {
-        white-space: pre-line;
-    }
+.chart-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+}
+
+.chart-panel,
+.note-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+  padding: 1rem;
+}
+
+#container {
+  display: flex;
+  min-height: 520px;
+  overflow-x: auto;
+}
+
+#legend {
+  height: 400px;
+  min-width: 220px;
+  width: 220px;
+}
+
+.back-button {
+  background: #111827;
+  border: 0;
+  border-radius: 8px;
+  color: #ffffff;
+  font-weight: 800;
+  margin-top: 1rem;
+  padding: 0.7rem 1rem;
+}
+
+.note-label {
+  color: #0f766e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.65rem;
+  text-transform: uppercase;
+}
+
+.notepad {
+  color: #475569;
+  line-height: 1.7;
+  margin: 0;
+  white-space: pre-line;
+}
+
+@media (max-width: 900px) {
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
 }

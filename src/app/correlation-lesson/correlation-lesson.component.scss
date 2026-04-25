@@ -1,0 +1,168 @@
+.lesson-hero,
+.lesson-grid,
+.wide-panel {
+  margin: 0 auto;
+  max-width: 1180px;
+}
+
+.lesson-hero {
+  align-items: end;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1fr) 260px;
+  padding: 2rem 1rem 1rem;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  color: #111827;
+  font-size: clamp(2rem, 4vw, 4rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+h2 {
+  color: #111827;
+  font-size: 1.5rem;
+  font-weight: 850;
+}
+
+p {
+  color: #475569;
+  line-height: 1.7;
+}
+
+.eyebrow {
+  color: #0f766e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.65rem;
+  text-transform: uppercase;
+}
+
+.hero-stat,
+.lesson-panel {
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(17, 24, 39, 0.08);
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+
+.hero-stat {
+  padding: 1.5rem;
+}
+
+.hero-stat span {
+  color: #111827;
+  display: block;
+  font-size: 2.4rem;
+  font-weight: 900;
+}
+
+.lesson-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 1rem;
+}
+
+.lesson-panel {
+  padding: 1.5rem;
+}
+
+.accent-panel {
+  background: #ecfeff;
+  border-color: rgba(8, 145, 178, 0.22);
+}
+
+.meter-row,
+.stat-row {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+}
+
+.meter-row {
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin: 1rem 0 0.6rem;
+}
+
+.meter-row span,
+.stat-row span:first-child {
+  color: #111827;
+  font-weight: 800;
+}
+
+.meter {
+  background: #e5e7eb;
+  border-radius: 999px;
+  height: 0.8rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+
+.meter div {
+  background: #14b8a6;
+  border-radius: inherit;
+  height: 100%;
+}
+
+.meter.muted div {
+  background: #64748b;
+}
+
+.meter.warning div {
+  background: #f59e0b;
+}
+
+.wide-panel {
+  margin-top: 1rem;
+  padding: 1.5rem;
+}
+
+.stat-table {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.stat-row {
+  background: #f8fafc;
+  border-radius: 8px;
+  grid-template-columns: 1.1fr repeat(4, 1fr);
+  padding: 0.85rem 1rem;
+}
+
+.header-row {
+  background: #111827;
+  color: #ffffff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.header-row span:first-child {
+  color: #ffffff;
+}
+
+code {
+  color: #0f766e;
+  font-weight: 800;
+}
+
+@media (max-width: 820px) {
+  .lesson-hero,
+  .lesson-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-row {
+    grid-template-columns: 1fr;
+  }
+}
