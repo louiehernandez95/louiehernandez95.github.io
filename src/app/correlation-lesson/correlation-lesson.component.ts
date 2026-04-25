@@ -19,6 +19,7 @@ export class CorrelationLessonComponent implements OnInit {
   pokemonCount = 0;
   cards: CorrelationCard[] = [];
   strongest: CorrelationCard | null = null;
+  highCorrelationNote: CorrelationCard | null = null;
   tinyRuleBreaker = '';
 
   constructor(private data: DataService) { }
@@ -28,6 +29,14 @@ export class CorrelationLessonComponent implements OnInit {
     this.pokemonCount = pokemon.length;
     this.cards = this.buildCards(pokemon);
     this.strongest = [...this.cards].sort((a, b) => b.matchScore - a.matchScore)[0] || null;
+    this.highCorrelationNote = this.makeCard(
+      'High Correlation Example',
+      'Do taller Pokemon usually weigh more?',
+      pokemon.map((p) => p.height),
+      pokemon.map((p) => p.weight),
+      'Yes. In this dataset, height and weight have one of the clearest patterns. Bigger bodies usually weigh more.',
+      'Shocking discovery: skyscraper-sized Pokemon do not usually weigh the same as a sandwich.'
+    );
     this.tinyRuleBreaker = this.findTinyRuleBreaker(pokemon);
   }
 

@@ -51,6 +51,14 @@ export class ScatterComponent implements AfterViewInit {
     const radius = d3.scaleSqrt()
       .domain([0, d3.max(topPokemon, (p) => p.stats.hp) || 1])
       .range([3, 18]);
+    const attackCorrelation = this.correlation(
+      topPokemon.map((p) => p.weight),
+      topPokemon.map((p) => p.stats.attack)
+    );
+    const bestFit = this.linearRegression(
+      topPokemon.map((p) => p.weight),
+      topPokemon.map((p) => p.stats.attack)
+    );
 
     const color = d3.scaleOrdinal<string>()
       .domain(['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'steel', 'dark', 'fairy'])
@@ -85,6 +93,35 @@ export class ScatterComponent implements AfterViewInit {
       .attr('text-anchor', 'middle')
       .attr('font-weight', 800)
       .text('Attack');
+
+    const xMax = d3.max(topPokemon, (p) => p.weight) || 0;
+    const lineStart = { x: 0, y: bestFit.intercept };
+    const lineEnd = { x: xMax, y: bestFit.slope * xMax + bestFit.intercept };
+
+    plot.append('line')
+      .attr('x1', x(lineStart.x))
+      .attr('y1', y(lineStart.y))
+      .attr('x2', x(lineEnd.x))
+      .attr('y2', y(lineEnd.y))
+      .attr('stroke', '#111827')
+      .attr('stroke-width', 3)
+      .attr('stroke-dasharray', '8 6');
+
+    plot.append('text')
+      .attr('x', innerWidth - 12)
+      .attr('y', 24)
+      .attr('text-anchor', 'end')
+      .attr('font-weight', 900)
+      .attr('fill', '#111827')
+      .text(`Correlation coefficient r = ${attackCorrelation.toFixed(2)}`);
+
+    plot.append('text')
+      .attr('x', innerWidth - 12)
+      .attr('y', 48)
+      .attr('text-anchor', 'end')
+      .attr('font-weight', 700)
+      .attr('fill', '#475569')
+      .text('Dashed line = line of best fit');
 
     const tooltip = d3.select('body').append('div')
       .attr('class', 'tooltip')
@@ -129,9 +166,9 @@ export class ScatterComponent implements AfterViewInit {
   private drawBars(selector: string, data: ITypeSummary[], key: 'count' | 'averageSpeed', fill: string, axisLabel: string): void {
     d3.select(selector).selectAll('*').remove();
 
-    const width = 720;
-    const height = 390;
-    const margin = { top: 10, right: 20, bottom: 70, left: 70 };
+    const width = 1050;
+    const height = 440;
+    const margin = { top: 10, right: 30, bottom: 105, left: 80 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
 
@@ -167,7 +204,7 @@ export class ScatterComponent implements AfterViewInit {
       .attr('transform', `translate(0,${innerHeight})`)
       .call(d3.axisBottom(x))
       .selectAll('text')
-      .attr('transform', 'rotate(-35)')
+      .attr('transform', 'rotate(-28)')
       .style('text-anchor', 'end');
 
     plot.append('g').call(d3.axisLeft(y));
@@ -222,6 +259,25 @@ export class ScatterComponent implements AfterViewInit {
 
     const bottom = Math.sqrt(leftBottom * rightBottom);
     return bottom === 0 ? 0 : top / bottom;
+  }
+
+  private linearRegression(left: number[], right: number[]): { slope: number; intercept: number } {
+    const leftAverage = this.average(left);
+    const rightAverage = this.average(right);
+    let top = 0;
+    let bottom = 0;
+
+    for (let i = 0; i < left.length; i++) {
+      const leftDistance = left[i] - leftAverage;
+      top += leftDistance * (right[i] - rightAverage);
+      bottom += leftDistance * leftDistance;
+    }
+
+    const slope = bottom === 0 ? 0 : top / bottom;
+    return {
+      slope,
+      intercept: rightAverage - slope * leftAverage
+    };
   }
 
   private average(values: number[]): number {

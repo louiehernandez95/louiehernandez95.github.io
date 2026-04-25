@@ -45,6 +45,20 @@
   </article>
 </section>
 
+<section class="wide-note" *ngIf="highCorrelationNote">
+  <p class="eyebrow">{{ highCorrelationNote.title }}</p>
+  <h2>{{ highCorrelationNote.question }}</h2>
+  <div class="meter-row">
+    <span>Pattern match</span>
+    <strong>{{ highCorrelationNote.matchScore }}/100</strong>
+  </div>
+  <div class="meter">
+    <div [style.width]="getMatchWidth(highCorrelationNote.matchScore)"></div>
+  </div>
+  <p>{{ highCorrelationNote.answer }}</p>
+  <p class="joke">{{ highCorrelationNote.joke }}</p>
+</section>
+
 <section class="lesson-grid">
   <article class="lesson-panel accent-panel">
     <p class="eyebrow">Correlation Is Not Causation</p>

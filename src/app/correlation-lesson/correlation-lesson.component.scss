@@ -1,6 +1,7 @@
 .lesson-hero,
 .lesson-grid,
-.wide-panel {
+.wide-panel,
+.wide-note {
   margin: 0 auto;
   max-width: 1180px;
 }
@@ -47,7 +48,8 @@ p {
 }
 
 .hero-stat,
-.lesson-panel {
+.lesson-panel,
+.wide-note {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(17, 24, 39, 0.08);
   border-radius: 8px;
@@ -122,6 +124,12 @@ p {
 }
 
 .wide-panel {
+  margin-top: 1rem;
+  padding: 1.5rem;
+}
+
+.wide-note {
+  border-color: rgba(20, 184, 166, 0.32);
   margin-top: 1rem;
   padding: 1.5rem;
 }
